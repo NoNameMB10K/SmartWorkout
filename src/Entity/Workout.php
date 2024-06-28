@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WorkoutRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +28,17 @@ class Workout
 
     #[ORM\ManyToOne(inversedBy: 'workouts')]
     private ?Type $type = null;
+
+    /**
+     * @var Collection<int, ExerciseLog>
+     */
+    #[ORM\OneToMany(targetEntity: ExerciseLog::class, mappedBy: 'workout', orphanRemoval: true)]
+    private Collection $exerciseLogs;
+
+    public function __construct()
+    {
+        $this->exerciseLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -76,6 +89,36 @@ class Workout
     public function setType(?Type $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExerciseLog>
+     */
+    public function getExerciseLogs(): Collection
+    {
+        return $this->exerciseLogs;
+    }
+
+    public function addExerciseLog(ExerciseLog $exerciseLog): static
+    {
+        if (!$this->exerciseLogs->contains($exerciseLog)) {
+            $this->exerciseLogs->add($exerciseLog);
+            $exerciseLog->setWorkout($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExerciseLog(ExerciseLog $exerciseLog): static
+    {
+        if ($this->exerciseLogs->removeElement($exerciseLog)) {
+            // set the owning side to null (unless already changed)
+            if ($exerciseLog->getWorkout() === $this) {
+                $exerciseLog->setWorkout(null);
+            }
+        }
 
         return $this;
     }
