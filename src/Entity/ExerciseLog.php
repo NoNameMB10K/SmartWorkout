@@ -17,7 +17,7 @@ class ExerciseLog
     #[ORM\Column]
     private ?int $nrReps = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $duration = null;
 
     #[ORM\ManyToOne(inversedBy: 'exerciseLogs')]
