@@ -16,6 +16,15 @@ class WorkoutRepository extends ServiceEntityRepository
         parent::__construct($registry, Workout::class);
     }
 
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('w')
+                ->orderBy('w.id', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return Workout[] Returns an array of Workout objects
     //     */
