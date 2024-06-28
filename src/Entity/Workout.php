@@ -20,6 +20,13 @@ class Workout
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'workouts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'workouts')]
+    private ?Type $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +52,30 @@ class Workout
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

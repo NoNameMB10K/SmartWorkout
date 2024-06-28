@@ -19,6 +19,9 @@ class Exercise
     #[ORM\Column(length: 2048, nullable: true)]
     private ?string $linkToVideo = null;
 
+    #[ORM\ManyToOne(inversedBy: 'exercises')]
+    private ?Type $type = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Exercise
     public function setLinkToVideo(?string $linkToVideo): static
     {
         $this->linkToVideo = $linkToVideo;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
