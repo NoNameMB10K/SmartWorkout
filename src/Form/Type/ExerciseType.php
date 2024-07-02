@@ -15,7 +15,7 @@ class ExerciseType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('linkToVideo', TextType::class)
+            ->add('linkToVideo', TextType::class, array('required' => false))
             ->add('save', SubmitType::class)
         ;
     }

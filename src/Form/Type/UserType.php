@@ -19,13 +19,13 @@ class UserType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('password', TextType::class)
-            ->add('birthday',BirthdayType::class )
+            ->add('birthday',BirthdayType::class, array('required' => false) )
             ->add('gender', ChoiceType::class,
                 ['choices' =>
                     [
+                        'Other' => Null,
                         'Male' => 1,
-                        'Female' => '2',
-                        'Other' => '3'
+                        'Female' => 2,
                     ],])
             ->add('save', SubmitType::class)
         ;
