@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\ExerciseLog;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExerciseLogFixtures extends Fixture
+class ExerciseLogFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -79,5 +80,12 @@ class ExerciseLogFixtures extends Fixture
         $manager->persist($exerciseLog12);
 
         $manager->flush();
+    }
+    public function getDependencies(): array
+    {
+        return [
+            WorkoutFixtures::class,
+            ExerciseFixtures::class,
+        ];
     }
 }

@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Exercise;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExerciseFixtures extends Fixture
+class ExerciseFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -77,5 +78,12 @@ class ExerciseFixtures extends Fixture
         $this->addReference('exercise8', $exercise8);
         $this->addReference('exercise9', $exercise9);
         $this->addReference('exercise10', $exercise10);
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            TypeFixtures::class,
+        ];
     }
 }
