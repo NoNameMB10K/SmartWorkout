@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Exercise;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,10 +12,29 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExerciseRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Exercise::class);
+        $this->entityManager = $entityManager;
     }
+
+    public function saveOne(Exercise $exercise): void
+    {
+        $this->entityManager->persist($exercise);
+        $this->entityManager->flush();
+    }
+
+        public function findByExampleField($value): array
+        {
+            return $this->createQueryBuilder('e')
+                ->orderBy('e.id', 'ASC')
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+
 
     //    /**
     //     * @return Exercise[] Returns an array of Exercise objects

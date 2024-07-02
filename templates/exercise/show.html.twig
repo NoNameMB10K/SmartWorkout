@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workouts</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Exercises</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Link to youtube video</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for exercise in exercises %}
+        <tr>
+            <td>{{ exercise.name }}</td>
+            <td>{{ exercise.linkToVideo}}</td>
+            <td>{{ exercise.type }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

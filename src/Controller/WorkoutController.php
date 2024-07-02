@@ -8,12 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class DisplayWorkoutsController extends AbstractController
+class WorkoutController extends AbstractController
 {
-    #[Route('/display/workouts', name: 'app_display_workouts')]
+    #[Route('/workouts', name: 'app_display_workouts')]
     public function index(WorkoutRepository $workoutRepository): Response
     {
-        //dd($workoutRepository->findAll());
-        return $this->render('workouts.html.twig', ['workouts' => $workoutRepository->findAll()]);
+        return $this->render('workout/show.html.twig', ['workouts' => $workoutRepository->findAll()]);
     }
 }
