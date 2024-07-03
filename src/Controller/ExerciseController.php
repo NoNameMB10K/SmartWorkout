@@ -36,9 +36,33 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercises', methods: ['GET'])]
-    public function index(ExerciseRepository $exerciseRepository): Response
+    public function show(ExerciseRepository $exerciseRepository): Response
     {
         return $this->render('exercise/show.html.twig', ['exercises' => $exerciseRepository->findAll()]);
+    }
+
+    #[Route('/exercise/{id}', name:'exercise_edit', requirements: ['id' => '^\d+$'], methods: ['GET', 'PATCH'])]
+    public function edit(int $id,Request $request, ExerciseRepository $exerciseRepository): Response
+    {
+        $exercise = $exerciseRepository->findOneById($id);
+        $form = $this->createForm(ExerciseType::class, $exercise, [
+            'action' => $this->generateUrl('exercise_edit', ['id' => $id]),
+            'method' => 'PATCH',
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$exerciseRepository->saveOne($user);
+            return $this->render('finishedActionPrompt.html.twig', [
+                'entity' => 'Exercise',
+                'action' => 'updated',
+                'success' => true,
+            ]);
+        }
+
+        return $this->render('exercise/edit.html.twig', [
+            'form' => $form,
+        ]);
     }
 
 }

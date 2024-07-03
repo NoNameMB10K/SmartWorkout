@@ -16,6 +16,8 @@ class TypeRepository extends ServiceEntityRepository
         parent::__construct($registry, Type::class);
     }
 
+
+
     //    /**
     //     * @return TypeFixtures[] Returns an array of TypeFixtures objects
     //     */
