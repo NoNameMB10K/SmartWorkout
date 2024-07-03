@@ -36,6 +36,18 @@ class UserRepository extends ServiceEntityRepository
         ;
         return $response[0];
     }
+
+    public function deleteOneById(int $id): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
