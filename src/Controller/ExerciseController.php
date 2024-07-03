@@ -25,6 +25,7 @@ class ExerciseController extends AbstractController
             //$exerciseRepository->saveOne($exercise);
             return $this->render('finishedActionPrompt.html.twig', [
                 'success' => true,
+                'action' => 'created',
                 'entity' => "Exercise",
             ]);
         }

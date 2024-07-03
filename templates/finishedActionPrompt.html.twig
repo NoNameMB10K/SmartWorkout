@@ -9,11 +9,11 @@
 <body>
 {% if success %}
     <div class="alert alert-success">
-        {{ entity }} created successfully.
+        {{ entity }} {{ action }} successfully.
     </div>
 {% else %}
     <div class="alert alert-danger">
-        {{ entity }} was not created.
+        {{ entity }} was not {{ action }}.
     </div>
 {% endif %}
 </body>
