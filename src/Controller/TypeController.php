@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TypeController extends AbstractController
 {
-    #[Route('/type', name: 'app_type')]
+    #[Route('/types', name: 'app_type', methods: ['GET'])]
     public function show(TypeRepository $typeRepository): Response
     {
         return $this->render('type/show.html.twig', [

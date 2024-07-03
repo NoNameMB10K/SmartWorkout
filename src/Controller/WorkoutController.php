@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class WorkoutController extends AbstractController
 {
-    #[Route('/workouts', name: 'app_display_workouts')]
+    #[Route('/workouts', name: 'app_display_workouts', methods: ['GET'])]
     public function index(WorkoutRepository $workoutRepository): Response
     {
         return $this->render('workout/show.html.twig', ['workouts' => $workoutRepository->findAll()]);
