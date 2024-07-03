@@ -39,6 +39,17 @@ class ExerciseRepository extends ServiceEntityRepository
         return $response[0];
     }
 
+    public function deleteOneById(int $id): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
     //    /**
     //     * @return Exercise[] Returns an array of Exercise objects

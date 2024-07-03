@@ -7,6 +7,7 @@ use App\Form\Type\DeleteButtonType;
 use App\Form\Type\UserType;
 use App\Form\Type\UserUpdateType;
 use App\Repository\UserRepository;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class UserController extends AbstractController
     public function show(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
     }
@@ -74,7 +75,7 @@ class UserController extends AbstractController
     {
         $user = $userRepository->findOneById($id);
         $form = $this->createForm(UserUpdateType::class, $user, [
-            'action' => $this->generateUrl('user_patch', ['id' => $id]),
+            'action' => $this->generateUrl('user_update', ['id' => $id]),
             'method' => 'PATCH',
         ]);
 
@@ -83,12 +84,12 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/{id}', name:'user_patch', requirements: ['id' => '^\d+$'], methods: ['PATCH'])]
+    #[Route('/user/{id}', name:'user_update', requirements: ['id' => '^\d+$'], methods: ['PATCH'])]
     public function update(int $id, UserRepository $userRepository, Request $request): Response
     {
         $user = $userRepository->findOneById($id);
         $form = $this->createForm(UserUpdateType::class, $user, [
-            'action' => $this->generateUrl('user_patch', ['id' => $id]),
+            'action' => $this->generateUrl('user_update', ['id' => $id]),
             'method' => 'PATCH',
         ]);
 
@@ -119,7 +120,7 @@ class UserController extends AbstractController
     #[Route('/user/delete/{id}', name:'user_delete', requirements: ['id' => '^\d+$'], methods: ['DELETE'])]
     public function delete(int $id, UserRepository $userRepository): Response
     {
-        $user = $userRepository->findOneById($id);
+        //$user = $userRepository->findOneById($id);
         $userRepository->deleteOneById($id);
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'User',
@@ -132,7 +133,7 @@ class UserController extends AbstractController
     public function deleteView(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
-        $form = $this->createForm(DeleteButtonType::class, $user, [
+        $form = $this->createForm(DeleteButtonType::class, new stdClass(), [
             'action' => $this->generateUrl('user_delete', ['id' => $id]),
             'method' => 'DELETE',
         ]);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exercises</title>
+    <title>Exercise</title>
     <style>
         table {
             width: 100%;
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-<h1>Exercises</h1>
+<h1>Exercise</h1>
 <table>
     <thead>
     <tr>
@@ -30,13 +30,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for exercise in exercises %}
         <tr>
             <td>{{ exercise.name }}</td>
             <td>{{ exercise.linkToVideo}}</td>
             <td>{{ exercise.type is not null ? exercise.type.name : 'N/A' }}</td>
         </tr>
-    {% endfor %}
     </tbody>
 </table>
 </body>

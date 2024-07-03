@@ -12,7 +12,7 @@ class TypeController extends AbstractController
     #[Route('/types', name: 'app_type', methods: ['GET'])]
     public function show(TypeRepository $typeRepository): Response
     {
-        return $this->render('type/show.html.twig', [
+        return $this->render('type/index.html.twig', [
             'types' => $typeRepository->findAll(),
         ]);
     }

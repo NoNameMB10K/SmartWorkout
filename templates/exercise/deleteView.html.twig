@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exercises</title>
+    <title>Deleted Exercise</title>
     <style>
         table {
             width: 100%;
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-<h1>Exercises</h1>
+<h1>Deleted Exercise</h1>
 <table>
     <thead>
     <tr>
@@ -30,14 +30,15 @@
     </tr>
     </thead>
     <tbody>
-    {% for exercise in exercises %}
-        <tr>
-            <td>{{ exercise.name }}</td>
-            <td>{{ exercise.linkToVideo}}</td>
-            <td>{{ exercise.type is not null ? exercise.type.name : 'N/A' }}</td>
-        </tr>
-    {% endfor %}
+    <tr>
+        <td>{{ exercise.name }}</td>
+        <td>{{ exercise.linkToVideo}}</td>
+        <td>{{ exercise.type is not null ? exercise.type.name : 'N/A' }}</td>
+    </tr>
     </tbody>
 </table>
+<div>
+    {{ form(form) }}
+</div>
 </body>
 </html>
