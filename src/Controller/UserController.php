@@ -40,7 +40,6 @@ class UserController extends AbstractController
     public function create(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
-
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -62,10 +61,10 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{id}', name:'user_show', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function show(int $id, Request $request, UserRepository $userRepository): Response
+    public function show(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
-        return $this->render('user/show.html.twig', [
+        return $this->render('user/index.html.twig', [
             'user' => $user,
         ]);
     }
@@ -118,7 +117,7 @@ class UserController extends AbstractController
 
     ////Route: user/{id}
     #[Route('/user/delete/{id}', name:'user_delete', requirements: ['id' => '^\d+$'], methods: ['DELETE'])]
-    public function delete(int $id, Request $request, UserRepository $userRepository): Response
+    public function delete(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
         $userRepository->deleteOneById($id);
@@ -130,7 +129,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/deleteView/{id}', name:'user_delete_view', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function deleteView(int $id, Request $request, UserRepository $userRepository): Response
+    public function deleteView(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
         $form = $this->createForm(DeleteButtonType::class, $user, [
