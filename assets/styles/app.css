@@ -1,3 +1,66 @@
 body {
-    background-color: lightgray;
+    background-color: #121212 !important;
+    color: #e0e0e0;
+}
+
+a {
+    color: #bb86fc;
+}
+
+a:hover {
+    color: #bb86fc;
+    text-decoration: underline;
+}
+
+table {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+th {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+td {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+table, th, td {
+    border: 1px solid #444444;
+}
+
+input, textarea, select {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #444444;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #888888;
+}
+
+button {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #444444;
+}
+
+button:hover {
+    background-color: #444444;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #e0e0e0;
+}
+
+.container {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.navbar, .footer, .card, .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
 }

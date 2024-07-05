@@ -1,46 +1,124 @@
-{# templates/user/index.html.twig #}
+{# templates/user/deleteView.html.twig #}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Deleted User</title>
+{% extends 'base.html.twig' %}
+
+{% block title %}Delete User{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
-    <h1 class="mt-5">Deleted User</h1>
-    <table class="table table-bordered mt-3">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Birthday</th>
-            <th>Gender</th>
-            <th>Workouts</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.password }}</td>
-            <td>{{ user.birthday ? user.birthday|date('Y-m-d H:i:s') : 'N/A' }}</td>
-            <td>{{ user.gender is not null ? (user.gender == 1 ? 'Male' : 'Female') : 'N/A' }}</td>
-            <td>
-                <ul>
-                    {% for workout in user.workouts %}
-                        <li>{{ workout.name }}</li> {# Assuming Workout entity has a name property #}
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="container">
-    {{ form(form) }}
-</div>
-</body>
-</html>
+    <style>
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .card-header {
+            background-color: #333333;
+            color: #ffffff;
+            border-bottom: 1px solid #444444;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 10px 15px;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        table {
+            width: 100%;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: none;
+        }
+        th {
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+        }
+        td {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: none;
+            vertical-align: middle;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            color: #e0e0e0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn-delete {
+            width: 100%;
+            padding: 10px;
+            background-color: #d32f2f;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="mt-3 mb-0">Deleted User</h1>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ user.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Password</th>
+                        <td>{{ user.password }}</td>
+                    </tr>
+                    <tr>
+                        <th>Birthday</th>
+                        <td>{{ user.birthday ? user.birthday|date('Y-m-d H:i:s') : 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Gender</th>
+                        <td>{{ user.gender is not null ? (user.gender == 1 ? 'Male' : 'Female') : 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Workouts</th>
+                        <td>
+                            <ul>
+                                {% for workout in user.workouts %}
+                                    <li>{{ workout.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.delete, {'label': 'Confirm Delete', 'attr': {'class': 'btn btn-delete'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
