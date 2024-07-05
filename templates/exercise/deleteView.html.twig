@@ -1,44 +1,105 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Deleted Exercise</title>
+{# templates/exercise/deleteView.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercise: {{ exercise.name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
     <style>
-        table {
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            width: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-delete {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            width: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-header {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border-bottom: 1px solid #444444;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        .card-body {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card-footer {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border-top: 1px solid #444444;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        .video-preview {
             width: 100%;
-            border-collapse: collapse;
+            height: calc(100% - 30px);
+            max-height: 100%;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #f2f2f2;
+        .btn-delete {
+            width: 100%;
+            padding: 10px;
+            background-color: #d32f2f;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
-</head>
-<body>
-<h1>Deleted Exercise</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Link to youtube video</th>
-        <th>Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{ exercise.name }}</td>
-        <td>{{ exercise.linkToVideo}}</td>
-        <td>{{ exercise.type is not null ? exercise.type.name : 'N/A' }}</td>
-    </tr>
-    </tbody>
-</table>
-<div>
-    {{ form(form) }}
-</div>
-</body>
-</html>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ exercise.name }}</h3>
+        </div>
+        <div class="card-body">
+            <iframe class="video-preview" src="https://www.youtube.com/embed/{{ exercise.linkToVideo }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="card-footer">
+            <p>Type: {{ exercise.type is not null ? exercise.type.name : 'N/A' }}</p>
+        </div>
+    </div>
+    <div class="card-delete">
+        <div class="card-body">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.delete, {'label': 'Confirm Delete', 'attr': {'class': 'btn btn-delete'}}) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+

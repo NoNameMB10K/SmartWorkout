@@ -33,16 +33,16 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise9->setName("Push-up");
         $exercise10->setName("Crunch");
 
-        $exercise1->setLinkToVideo("https://www.youtube.com/watch?v=dPezGjAhrU0&t=20s");
-        $exercise2->setLinkToVideo("https://www.youtube.com/watch?v=4Y2ZdHCOXok");
-        $exercise3->setLinkToVideo("https://www.youtube.com/watch?v=SkNsa3eBwLA");
-        $exercise4->setLinkToVideo("https://www.youtube.com/watch?v=boUVD0pCGCk");
-        $exercise5->setLinkToVideo("https://www.youtube.com/watch?v=vq5-vdgJc0I");
-        $exercise6->setLinkToVideo("https://www.youtube.com/watch?v=wuDgmAr2ez8");
-        $exercise7->setLinkToVideo("https://www.youtube.com/watch?v=l41SoWZiowI");
-        $exercise8->setLinkToVideo("https://www.youtube.com/watch?v=p40iUjf02j0&t=104s");
-        $exercise9->setLinkToVideo("https://www.youtube.com/watch?v=IODxDxX7oi4");
-        $exercise10->setLinkToVideo("https://www.youtube.com/watch?v=MKmrqcoCZ-M");
+        $exercise1->setLinkToVideo("dPezGjAhrU0");
+        $exercise2->setLinkToVideo("4Y2ZdHCOXok");
+        $exercise3->setLinkToVideo("SkNsa3eBwLA");
+        $exercise4->setLinkToVideo("boUVD0pCGCk");
+        $exercise5->setLinkToVideo("vq5-vdgJc0I");
+        $exercise6->setLinkToVideo("wuDgmAr2ez8");
+        $exercise7->setLinkToVideo("l41SoWZiowI");
+        $exercise8->setLinkToVideo("p40iUjf02j0");
+        $exercise9->setLinkToVideo("IODxDxX7oi4");
+        $exercise10->setLinkToVideo("MKmrqcoCZ-M");
 
         $exercise1->setType($this->getReference('type1'));
         $exercise2->setType($this->getReference('type1'));
