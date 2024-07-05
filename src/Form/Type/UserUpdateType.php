@@ -26,7 +26,6 @@ class UserUpdateType extends AbstractType
                         'Female' => 2,
                     ],])
             ->add('save', SubmitType::class)
-            ->add('delete', SubmitType::class)
         ;
     }
 

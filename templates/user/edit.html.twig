@@ -57,19 +57,23 @@
                 <h1 class="mt-3 mb-0">Edit User</h1>
             </div>
             <div class="card-body">
-                {{ form_start(form) }}
+                {{ form_start(userForm) }}
                 <div class="form-group">
-                    {{ form_row(form.name) }}
+                    {{ form_row(userForm.name) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.birthday) }}
+                    {{ form_row(userForm.birthday) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.gender) }}
+                    {{ form_row(userForm.gender) }}
                 </div>
-                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-danger'}}) }}
-                {{ form_end(form) }}
+                {{ form_widget(userForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+                {{ form_end(userForm) }}
+                <br>
+                {{ form_start(deleteUser) }}
+                {{ form_widget(deleteUser.delete, {'attr': {'class': 'btn btn-danger'}}) }}
+                {{ form_end(deleteUser) }}
+
             </div>
         </div>
     </div>

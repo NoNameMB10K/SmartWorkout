@@ -74,13 +74,19 @@ class UserController extends AbstractController
     public function edit(int $id, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneById($id);
-        $form = $this->createForm(UserUpdateType::class, $user, [
+        $userForm = $this->createForm(UserUpdateType::class, $user, [
             'action' => $this->generateUrl('user_update', ['id' => $id]),
             'method' => 'PATCH',
         ]);
 
+        $deleteUser = $this->createForm(DeleteButtonType::class, new stdClass(), [
+            'action' => $this->generateUrl('user_delete', ['id' => $id]),
+            'method' => 'DELETE',
+        ]);
+
         return $this->render('user/edit.html.twig', [
-            'form' => $form,
+            'userForm' => $userForm,
+            'deleteUser' => $deleteUser,
         ]);
     }
 
