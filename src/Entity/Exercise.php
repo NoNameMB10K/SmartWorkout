@@ -45,6 +45,13 @@ class Exercise
         return $this->name;
     }
 
+    public function setId(int $id): ?static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function setName(string $name): static
     {
         $this->name = $name;
