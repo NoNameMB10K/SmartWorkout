@@ -1,8 +1,8 @@
-{#/workout/show.html.twig#}
+{#/workout/index.html.twig#}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Workout</title>
+    <title>Workouts</title>
     <style>
         table {
             width: 100%;
@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-<h1>Workout</h1>
+<h1>Workouts</h1>
 <table>
     <thead>
     <tr>
@@ -32,12 +32,14 @@
     </tr>
     </thead>
     <tbody>
+    {% for workout in workouts %}
         <tr>
             <td>{{ workout.name }}</td>
             <td>{{ workout.date|date('Y-m-d H:i:s') }}</td>
             <td>{{ workout.user.id }}</td>
             <td>{{ workout.type is not null ? workout.type.name : 'N/A' }}</td>
         </tr>
+    {% endfor %}
     </tbody>
 </table>
 </body>

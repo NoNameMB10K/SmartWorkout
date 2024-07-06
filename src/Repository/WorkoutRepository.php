@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Workout;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,9 +12,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WorkoutRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Workout::class);
+        $this->entityManager = $entityManager;
     }
 
     public function findAll(): array
@@ -23,6 +26,35 @@ class WorkoutRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult()
             ;
+    }
+
+    public function saveOne(Workout $workout): void
+    {
+        $this->entityManager->persist($workout);
+        $this->entityManager->flush();
+    }
+
+    public function findOneById(int $id): Workout
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function deleteOneById(int $id): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     //    /**

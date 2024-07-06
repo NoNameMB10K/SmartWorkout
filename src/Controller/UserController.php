@@ -101,10 +101,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('delete')->isSubmitted()) {
-                return $this->redirectToRoute('user_delete', ['id' => $id]);
-            }
-
             $userRepository->saveOne($user);
             return $this->render('finishedActionPrompt.html.twig', [
                 'entity' => 'User',

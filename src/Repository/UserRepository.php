@@ -23,18 +23,27 @@ class UserRepository extends ServiceEntityRepository
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
+    public function findOneByName(string $name): User
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.name = :val')
+            ->setParameter('val', $name)
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
     public function findOneById(int $id): User
     {
-        $response = $this->createQueryBuilder('u')
+        return $this->createQueryBuilder('u')
             ->andWhere('u.id = :givenId')
             ->setParameter('givenId', $id)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
-        return $response[0];
     }
 
     public function deleteOneById(int $id): void
