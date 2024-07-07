@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Workout;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,6 +26,16 @@ class WorkoutRepository extends ServiceEntityRepository
                 ->orderBy('w.id', 'ASC')
                 ->getQuery()
                 ->getResult()
+            ;
+    }
+
+    public function findAllByUserId(User $suer): array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.user = :user')
+            ->setParameter('user', $suer)
+            ->getQuery()
+            ->getResult()
             ;
     }
 

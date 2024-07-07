@@ -71,9 +71,12 @@
                     </div>
                     <div class="card-footer">
                         <p>Type: {{ exercise.type is not null ? exercise.type.name : 'N/A' }}</p>
+{#                        <p><a href="{{  path('exercise_show', { 'id': exercise.id }) }}">View</a></p>#}
+                        <p><a href="{{  path('exercise_edit', { 'id': exercise.id }) }}">Edit</a></p>
                     </div>
                 </div>
             {% endfor %}
         </div>
+        <p><a href="{{  path('exercises_new') }}">Create new exercise</a></p>
     </div>
 {% endblock %}

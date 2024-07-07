@@ -69,6 +69,7 @@
         </div>
         <div class="card-footer">
             <p>Type: {{ exercise.type is not null ? exercise.type.name : 'N/A' }}</p>
+            <p><a href="{{  path('exercise_edit', { 'id': exercise.id }) }}">Edit</a></p>
         </div>
     </div>
 {% endblock %}

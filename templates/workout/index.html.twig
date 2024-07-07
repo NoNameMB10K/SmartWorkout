@@ -51,6 +51,7 @@
                 <th>Date</th>
                 <th>User ID</th>
                 <th>Type</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -60,9 +61,14 @@
                     <td>{{ workout.date|date('Y-m-d H:i:s') }}</td>
                     <td>{{ workout.user.id }}</td>
                     <td>{{ workout.type is not null ? workout.type.name : 'N/A' }}</td>
+                    <td>
+                        <p><a href="{{  path('showWorkout_exerciseLog', { 'workoutId': workout.id }) }}">Show more</a></p>
+                        <p><a href="{{  path('edit_workout', { 'id': workout.id }) }}">Edit</a></p>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <p><a href="{{  path('new_workout') }}">Create new workout</a></p>
     </div>
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Exercise;
 use App\Form\Type\DeleteButtonType;
 use App\Form\Type\ExerciseType;
+use App\Repository\ExerciseLogRepository;
 use App\Repository\ExerciseRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,11 +44,12 @@ class ExerciseController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $exerciseRepository->saveOne($exercise);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'success' => true,
-                'action' => 'created',
-                'entity' => "Exercise",
-            ]);
+            return $this->redirectToRoute('exercises_index');
+//            return $this->render('finishedActionPrompt.html.twig', [
+//                'success' => true,
+//                'action' => 'created',
+//                'entity' => "Exercise",
+//            ]);
         }
 
         ////////////////////////////////////////////////
@@ -69,26 +71,25 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercise/edit/{id}', name:'exercise_edit', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function edit(int $id,Request $request, ExerciseRepository $exerciseRepository): Response
+    public function edit(int $id, ExerciseRepository $exerciseRepository, ExerciseLogRepository $exerciseLogRepository): Response
     {
         $exercise = $exerciseRepository->findOneById($id);
-        $form = $this->createForm(ExerciseType::class, $exercise, [
+        $editForm = $this->createForm(ExerciseType::class, $exercise, [
             'action' => $this->generateUrl('exercise_update', ['id' => $id]),
             'method' => 'PATCH',
         ]);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            //$exerciseRepository->saveOne($user);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'entity' => 'Exercise',
-                'action' => 'updated',
-                'success' => true,
-            ]);
-        }
+        $deleteForm = $this->createForm(DeleteButtonType::class, new stdClass(), [
+            'action' => $this->generateUrl('exercise_delete', ['id' => $id]),
+            'method' => 'DELETE',
+        ]);
+
+        $deletable = $exerciseLogRepository->exerciseIsUsed($exercise);
 
         return $this->render('exercise/edit.html.twig', [
-            'form' => $form,
+            'editForm' => $editForm,
+            'deleteFrom' => $deleteForm,
+            'deletable' => $deletable,
         ]);
     }
     #[Route('/exercise/{id}', name:'exercise_update', requirements: ['id' => '^\d+$'], methods: ['PATCH'])]
@@ -103,11 +104,12 @@ class ExerciseController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $exerciseRepository->saveOne($exercise);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'entity' => 'Exercise',
-                'action' => 'updated',
-                'success' => true,
-            ]);
+            return $this->redirectToRoute('exercises_index');
+//            return $this->render('finishedActionPrompt.html.twig', [
+//                'entity' => 'Exercise',
+//                'action' => 'updated',
+//                'success' => true,
+//            ]);
         }
 
         ////////////////////////////////////////////////
@@ -124,27 +126,26 @@ class ExerciseController extends AbstractController
     {
         $exercise = $exerciseRepository->findOneById($id);
         $exerciseRepository->deleteOneById($id);
-        return $this->render('finishedActionPrompt.html.twig', [
-            'entity' => 'Exercise',
-            'action' => 'deleted',
-            'success' => true,
-        ]);
+        return $this->redirectToRoute('exercises_index');
+//        return $this->render('finishedActionPrompt.html.twig', [
+//            'entity' => 'Exercise',
+//            'action' => 'deleted',
+//            'success' => true,
+//        ]);
     }
 
-    #[Route('/exercise/deleteView/{id}', name:'exercise_delete_view', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function deleteView(int $id, ExerciseRepository $exerciseRepository): Response
-    {
-        $exercise = $exerciseRepository->findOneById($id);
-        $form = $this->createForm(DeleteButtonType::class, new stdClass(), [
-            'action' => $this->generateUrl('exercise_delete', ['id' => $id]),
-            'method' => 'DELETE',
-        ]);
-
-        return $this->render('exercise/deleteView.html.twig',[
-            'exercise' => $exercise,
-            'form' => $form,
-        ]);
-    }
-
-
+//    #[Route('/exercise/deleteView/{id}', name:'exercise_delete_view', requirements: ['id' => '^\d+$'], methods: ['GET'])]
+//    public function deleteView(int $id, ExerciseRepository $exerciseRepository): Response
+//    {
+//        $exercise = $exerciseRepository->findOneById($id);
+//        $form = $this->createForm(DeleteButtonType::class, new stdClass(), [
+//            'action' => $this->generateUrl('exercise_delete', ['id' => $id]),
+//            'method' => 'DELETE',
+//        ]);
+//
+//        return $this->render('exercise/deleteView.html.twig',[
+//            'exercise' => $exercise,
+//            'form' => $form,
+//        ]);
+//    }
 }

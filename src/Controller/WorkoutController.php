@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Workout;
 use App\Form\Type\DeleteButtonType;
 use App\Form\Type\WorkoutType;
+use App\Repository\ExerciseLogRepository;
 use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use stdClass;
@@ -17,10 +18,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class WorkoutController extends AbstractController
 {
-    #[Route('/workouts', name: 'index_workouts', methods: ['GET'])]
-    public function index(WorkoutRepository $workoutRepository): Response
+    #[Route('/workouts', name: 'workouts_index', methods: ['GET'])]
+    public function index(WorkoutRepository $workoutRepository, UserRepository $userRepository): Response
     {
-        return $this->render('workout/index.html.twig', ['workouts' => $workoutRepository->findAll()]);
+        $user = $userRepository->findOneByName('Alex Simion');
+
+        return $this->render('workout/index.html.twig', ['workouts' => $workoutRepository->findAllByUserId($user)]);
     }
 
     #[Route('/workouts/new', name: 'new_workout', methods: ['GET'])]
@@ -50,11 +53,12 @@ class WorkoutController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $workoutRepository->saveOne($workout);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'entity' => 'Workout',
-                'action' => 'created',
-                'success' => true,
-            ]);
+            return $this->redirectToRoute('workouts_index');
+//            return $this->render('finishedActionPrompt.html.twig', [
+//                'entity' => 'Workout',
+//                'action' => 'created',
+//                'success' => true,
+//            ]);
         }
         ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
@@ -105,11 +109,12 @@ class WorkoutController extends AbstractController
         $workoutForm->handleRequest($request);
         if ($workoutForm->isSubmitted() && $workoutForm->isValid()) {
             $workoutRepository->saveOne($workout);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'entity' => 'Workout',
-                'action' => 'updated',
-                'success' => true,
-            ]);
+            return $this->redirectToRoute('workouts_index');
+//            return $this->render('finishedActionPrompt.html.twig', [
+//                'entity' => 'Workout',
+//                'action' => 'updated',
+//                'success' => true,
+//            ]);
         }
 
         ////////////////////////////////////////////////
@@ -121,15 +126,17 @@ class WorkoutController extends AbstractController
     }
 
     #[Route('/workout/{id}', name:'delete_workout', requirements: ['id' => '^\d+$'], methods: ['DELETE'])]
-    public function delete(int $id, WorkoutRepository $workoutRepository): Response
+    public function delete(int $id, WorkoutRepository $workoutRepository, ExerciseLogRepository $exerciseLogRepository): Response
     {
-        //$workout = $workoutRepository->findOneById($id);
+        $workout = $workoutRepository->findOneById($id);
+        $exerciseLogRepository->deleteWorkoutEntries($workout);
         $workoutRepository->deleteOneById($id);
-        return $this->render('finishedActionPrompt.html.twig', [
-            'entity' => 'Workout',
-            'action' => 'deleted',
-            'success' => true,
-        ]);
+        return $this->redirectToRoute('workouts_index');
+//        return $this->render('finishedActionPrompt.html.twig', [
+//            'entity' => 'Workout',
+//            'action' => 'deleted',
+//            'success' => true,
+//        ]);
     }
 
 

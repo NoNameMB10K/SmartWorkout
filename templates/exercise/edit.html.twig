@@ -39,17 +39,23 @@
 {% block body %}
     <div class="container">
         <h1>Edit Exercise</h1>
-        {{ form_start(form) }}
+        {{ form_start(editForm) }}
         <div class="form-group">
-            {{ form_row(form.name) }}
+            {{ form_row(editForm.name) }}
         </div>
         <div class="form-group">
-            {{ form_row(form.linkToVideo) }}
+            {{ form_row(editForm.linkToVideo) }}
         </div>
         <div class="form-group">
-            {{ form_row(form.type) }}
+            {{ form_row(editForm.type) }}
         </div>
-        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-        {{ form_end(form) }}
+        {{ form_widget(editForm.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        {{ form_end(editForm) }}
+        {% if deletable %}
+            {{ form(deleteFrom) }}
+        {% else %}
+            <p>Exercise is used in a workout and can't be deleted now.</p>
+        {% endif %}
+
     </div>
 {% endblock %}

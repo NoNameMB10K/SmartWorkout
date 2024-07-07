@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Exercise;
 use App\Entity\ExerciseLog;
+use App\Entity\Workout;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,6 +51,31 @@ class ExerciseLogRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function exerciseIsUsed(Exercise $exercise): bool
+    {
+        $ans = $this->createQueryBuilder('u')
+            ->where('u.exercise = :exercise')
+            ->setParameter('exercise', $exercise)
+            ->getQuery()
+            ->getResult()
+        ;
+        if(!empty($ans))
+            return false;
+        else
+            return true;
+    }
+
+    public function deleteWorkoutEntries(Workout $workout): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.workout = :workout')
+            ->setParameter('workout', $workout)
+            ->getQuery()
+            ->execute();
+    }
+
 
     public function findOneById(int $id): ExerciseLog
     {
