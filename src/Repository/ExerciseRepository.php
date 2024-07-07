@@ -28,15 +28,13 @@ class ExerciseRepository extends ServiceEntityRepository
 
     public function findOneById(int $id): Exercise
     {
-        $response = $this->createQueryBuilder('u')
+        return $this->createQueryBuilder('u')
             ->andWhere('u.id = :givenId')
             ->setParameter('givenId', $id)
-            ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
-        return $response[0];
+            ->getOneOrNullResult()
+            ;
     }
 
     public function deleteOneById(int $id): void

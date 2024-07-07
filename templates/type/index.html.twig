@@ -25,15 +25,20 @@
     <thead>
     <tr>
         <th>Name</th>
+        <th>Edit</th>
     </tr>
     </thead>
     <tbody>
     {% for type in types %}
         <tr>
             <td>{{ type.name }}</td>
+            <td>
+                <p><a href="{{  path('type_edit', { 'id': type.id }) }}">Edit</a></p>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+<p><a href="{{  path('types_new') }}">Create new type</a></p>
 </body>
 </html>
