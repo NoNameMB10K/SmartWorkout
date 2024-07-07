@@ -1,7 +1,5 @@
 {#/exercise_log/showWorkout.html.twig#}
 
-{# templates/exercise/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Exercises{% endblock %}
@@ -86,17 +84,25 @@
             {% for exercise in exercises %}
                 <div class="card">
                     <div class="card-header">
-                        <h3>{{ exercise.name }}</h3>
+                        <h3>{{ exercise.data.name }}</h3>
                     </div>
                     <div class="card-body">
-                        <iframe class="video-preview" src="https://www.youtube.com/embed/{{ exercise.linkToVideo }}" frameborder="0" allowfullscreen></iframe>
+                        <iframe class="video-preview" src="https://www.youtube.com/embed/{{ exercise.data.linkToVideo }}" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="card-footer">
-                        <p>Type: {{ exercise.type is not null ? exercise.type.name : 'N/A' }}</p>
+                        <p>Type: {{ exercise.data.type is not null ? exercise.data.type.name : 'N/A' }}</p>
+                        <form action="{{ path('deleteExerciseWorkout_exerciseLog', { 'exerciseLogId': exercise.exerciseLogId }) }}" method="post" style="display:inline;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <p>
+                            <a href="{{  path('deleteExerciseWorkout_exerciseLog', { 'exerciseLogId': exercise.exerciseLogId }) }}">Delete</a>
+                        </p>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <a href="{{  path('newExerciseWorkout_exerciseLog', { 'workoutId': workoutId }) }}">Add New Exercise</a>
 {% endblock %}
 

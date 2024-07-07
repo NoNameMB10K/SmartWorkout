@@ -34,7 +34,7 @@ class WorkoutRepository extends ServiceEntityRepository
         $this->entityManager->flush();
     }
 
-    public function findOneById(int $id): Workout
+    public function findOneById(int $id): ?Workout
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.id = :givenId')

@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\ExerciseLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,12 +12,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExerciseLogRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private EntityManagerInterface $entityManager;
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, ExerciseLog::class);
+        $this->entityManager = $entityManager;
     }
 
-    public function findByWorkoutId(int $workoutId): array
+    public function findByWorkoutId(int $workoutId): ?array
     {
         return $this->createQueryBuilder('e')
             ->andWhere('e.workout = :givenId')
@@ -28,6 +31,35 @@ class ExerciseLogRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function saveOne(ExerciseLog $exerciseLog): void
+    {
+        $this->entityManager->persist($exerciseLog);
+        $this->entityManager->flush();
+    }
+
+    public function deleteOneById(int $id): void
+    {
+        $this->createQueryBuilder('u')
+            ->delete()
+            ->where('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findOneById(int $id): ExerciseLog
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :givenId')
+            ->setParameter('givenId', $id)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 
     //    /**
