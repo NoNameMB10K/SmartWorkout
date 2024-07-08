@@ -54,13 +54,8 @@ class WorkoutController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $workoutRepository->saveOne($workout);
             return $this->redirectToRoute('workouts_index');
-//            return $this->render('finishedActionPrompt.html.twig', [
-//                'entity' => 'Workout',
-//                'action' => 'created',
-//                'success' => true,
-//            ]);
         }
-        ////////////////////////////////////////////////
+
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Error-workout',
             'action' => 'Created',
@@ -110,14 +105,8 @@ class WorkoutController extends AbstractController
         if ($workoutForm->isSubmitted() && $workoutForm->isValid()) {
             $workoutRepository->saveOne($workout);
             return $this->redirectToRoute('workouts_index');
-//            return $this->render('finishedActionPrompt.html.twig', [
-//                'entity' => 'Workout',
-//                'action' => 'updated',
-//                'success' => true,
-//            ]);
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Error-workout',
             'action' => 'Created',
@@ -132,13 +121,5 @@ class WorkoutController extends AbstractController
         $exerciseLogRepository->deleteWorkoutEntries($workout);
         $workoutRepository->deleteOneById($id);
         return $this->redirectToRoute('workouts_index');
-//        return $this->render('finishedActionPrompt.html.twig', [
-//            'entity' => 'Workout',
-//            'action' => 'deleted',
-//            'success' => true,
-//        ]);
     }
-
-
-
 }

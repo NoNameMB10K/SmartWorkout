@@ -14,7 +14,11 @@ class TypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'pattern' => '^[a-zA-Z]+$',
+                    'message' => 'Name can contain only letters',
+                ]])
             ->add('save', SubmitType::class)
         ;
     }

@@ -25,7 +25,6 @@ class ExerciseLogType extends AbstractType
     {
         $builder
             ->add('nrReps', IntegerType::class, [
-                'constraints' => [new Positive()],
                 'attr' => [
                     'min' => 1,
                 ]

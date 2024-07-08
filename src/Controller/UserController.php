@@ -53,7 +53,6 @@ class UserController extends AbstractController
             ]);
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Error',
             'action' => 'created',
@@ -109,7 +108,6 @@ class UserController extends AbstractController
             ]);
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Error',
             'action' => 'Created',

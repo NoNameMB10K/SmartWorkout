@@ -56,7 +56,6 @@ class TypeController extends AbstractController
             return $this->redirectToRoute('types_index');
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Type-error',
             'action' => 'created',
@@ -99,7 +98,6 @@ class TypeController extends AbstractController
             return $this->redirectToRoute('types_index');
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Exercise-error',
             'action' => 'Created',

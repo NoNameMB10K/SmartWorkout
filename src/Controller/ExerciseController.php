@@ -52,8 +52,6 @@ class ExerciseController extends AbstractController
             return $this->redirectToRoute('exercises_index');
         }
 
-        ////////////////////////////////////////////////
-        dd($form);
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Exercise-error',
             'action' => 'Created',
@@ -106,14 +104,8 @@ class ExerciseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $exerciseRepository->saveOne($exercise);
             return $this->redirectToRoute('exercises_index');
-//            return $this->render('finishedActionPrompt.html.twig', [
-//                'entity' => 'Exercise',
-//                'action' => 'updated',
-//                'success' => true,
-//            ]);
         }
 
-        ////////////////////////////////////////////////
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Exercise-error',
             'action' => 'Created',
@@ -128,25 +120,5 @@ class ExerciseController extends AbstractController
         $exercise = $exerciseRepository->findOneById($id);
         $exerciseRepository->deleteOneById($id);
         return $this->redirectToRoute('exercises_index');
-//        return $this->render('finishedActionPrompt.html.twig', [
-//            'entity' => 'Exercise',
-//            'action' => 'deleted',
-//            'success' => true,
-//        ]);
     }
-
-//    #[Route('/exercise/deleteView/{id}', name:'exercise_delete_view', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-//    public function deleteView(int $id, ExerciseRepository $exerciseRepository): Response
-//    {
-//        $exercise = $exerciseRepository->findOneById($id);
-//        $form = $this->createForm(DeleteButtonType::class, new stdClass(), [
-//            'action' => $this->generateUrl('exercise_delete', ['id' => $id]),
-//            'method' => 'DELETE',
-//        ]);
-//
-//        return $this->render('exercise/deleteView.html.twig',[
-//            'exercise' => $exercise,
-//            'form' => $form,
-//        ]);
-//    }
 }

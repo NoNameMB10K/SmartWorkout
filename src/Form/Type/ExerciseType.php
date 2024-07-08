@@ -25,11 +25,10 @@ class ExerciseType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'constraints' => [
-                    new Regex('/^[a-zA-Z]+$/', 'Name can contain only letters'),
-                    new NotBlank(['message' => 'Name cannot be blank.']),
-                    ]
-                ])
+                'attr' => [
+                    'pattern' => '^[a-zA-Z]+$',
+                    'message' => 'Name can contain only letters',
+                ]])
             ->add('linkToVideo', TextType::class, ['required' => false])
             ->add('type', EntityType::class, [
                 'class' => Type::class,
