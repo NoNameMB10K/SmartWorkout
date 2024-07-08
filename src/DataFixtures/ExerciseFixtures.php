@@ -55,6 +55,17 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
         $exercise9->setType($this->getReference('type2'));
         $exercise10->setType($this->getReference('type2'));
 
+        $exercise1->setUser($this->getReference('user3'));
+        $exercise2->setUser($this->getReference('user3'));
+        $exercise3->setUser($this->getReference('user3'));
+        $exercise4->setUser($this->getReference('user3'));
+        $exercise5->setUser($this->getReference('user3'));
+        $exercise6->setUser($this->getReference('user3'));
+        $exercise7->setUser($this->getReference('user3'));
+        $exercise8->setUser($this->getReference('user3'));
+        $exercise9->setUser($this->getReference('user3'));
+        $exercise10->setUser($this->getReference('user3'));
+
         $manager->persist($exercise1);
         $manager->persist($exercise2);
         $manager->persist($exercise3);
@@ -84,6 +95,7 @@ class ExerciseFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             TypeFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

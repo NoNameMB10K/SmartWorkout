@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Exercise;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -24,6 +25,16 @@ class ExerciseRepository extends ServiceEntityRepository
     {
         $this->entityManager->persist($exercise);
         $this->entityManager->flush();
+    }
+
+    public function findAllByUserId(User $user): array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     public function findOneById(int $id): Exercise

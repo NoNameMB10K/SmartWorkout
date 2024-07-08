@@ -34,9 +34,16 @@ class User
     #[ORM\OneToMany(targetEntity: Workout::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $workouts;
 
+    /**
+     * @var Collection<int, Exercise>
+     */
+    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $exercises;
+
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
+        $this->exercises = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +123,36 @@ class User
             // set the owning side to null (unless already changed)
             if ($workout->getUser() === $this) {
                 $workout->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Exercise>
+     */
+    public function getExercises(): Collection
+    {
+        return $this->exercises;
+    }
+
+    public function addExercise(Exercise $exercise): static
+    {
+        if (!$this->exercises->contains($exercise)) {
+            $this->exercises->add($exercise);
+            $exercise->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExercise(Exercise $exercise): static
+    {
+        if ($this->exercises->removeElement($exercise)) {
+            // set the owning side to null (unless already changed)
+            if ($exercise->getUser() === $this) {
+                $exercise->setUser(null);
             }
         }
 

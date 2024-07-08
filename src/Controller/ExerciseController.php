@@ -7,6 +7,7 @@ use App\Form\Type\DeleteButtonType;
 use App\Form\Type\ExerciseType;
 use App\Repository\ExerciseLogRepository;
 use App\Repository\ExerciseRepository;
+use App\Repository\UserRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class ExerciseController extends AbstractController
 {
     #[Route('/exercises', name:'exercises_index', methods: ['GET'])]
-    public function index(ExerciseRepository $exerciseRepository): Response
+    public function index(ExerciseRepository $exerciseRepository, UserRepository $userRepository): Response
     {
-        return $this->render('exercise/index.html.twig', ['exercises' => $exerciseRepository->findAll()]);
+        $user = $userRepository->findOneByName('Alex Simion');
+
+        return $this->render('exercise/index.html.twig', ['exercises' => $exerciseRepository->findAllByUserId($user)]);
     }
     #[Route('/exercises/new',name:'exercises_new', methods: ['GET'])]
     public function new(): Response
@@ -35,11 +38,13 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercises',name:'exercises_create', methods: ['POST'])]
-    public function create(Request $request, ExerciseRepository $exerciseRepository): Response
+    public function create(Request $request, ExerciseRepository $exerciseRepository, UserRepository $userRepository): Response
     {
         $exercise = new Exercise();
-
         $form = $this->createForm(ExerciseType::class, $exercise);
+
+        $user = $userRepository->findOneByName('Alex Simion');
+        $exercise->setUser($user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

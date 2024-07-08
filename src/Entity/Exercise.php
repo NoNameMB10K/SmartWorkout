@@ -30,6 +30,10 @@ class Exercise
     #[ORM\OneToMany(targetEntity: ExerciseLog::class, mappedBy: 'exercise', orphanRemoval: true)]
     private Collection $exerciseLogs;
 
+    #[ORM\ManyToOne(inversedBy: 'exercises')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->exerciseLogs = new ArrayCollection();
@@ -109,6 +113,18 @@ class Exercise
                 $exerciseLog->setExercise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
