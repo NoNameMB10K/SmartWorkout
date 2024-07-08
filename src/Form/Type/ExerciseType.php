@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ExerciseType extends AbstractType
 {
@@ -22,7 +24,12 @@ class ExerciseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'constraints' => [
+                    new Regex('/^[a-zA-Z]+$/', 'Name can contain only letters'),
+                    new NotBlank(['message' => 'Name cannot be blank.']),
+                    ]
+                ])
             ->add('linkToVideo', TextType::class, ['required' => false])
             ->add('type', EntityType::class, [
                 'class' => Type::class,

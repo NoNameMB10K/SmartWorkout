@@ -45,18 +45,14 @@ class ExerciseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $exerciseRepository->saveOne($exercise);
             return $this->redirectToRoute('exercises_index');
-//            return $this->render('finishedActionPrompt.html.twig', [
-//                'success' => true,
-//                'action' => 'created',
-//                'entity' => "Exercise",
-//            ]);
         }
 
         ////////////////////////////////////////////////
+        dd($form);
         return $this->render('finishedActionPrompt.html.twig', [
             'entity' => 'Exercise-error',
             'action' => 'Created',
-            'success' => true,
+            'success' => false,
         ]);
     }
 
