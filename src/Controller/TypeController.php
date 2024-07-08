@@ -6,6 +6,7 @@ use App\Entity\Type;
 use App\Form\Type\DeleteButtonType;
 use App\Form\Type\TypeType;
 use App\Repository\TypeRepository;
+use App\Repository\UserRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class TypeController extends AbstractController
 {
     #[Route('/types', name: 'types_index', methods: ['GET'])]
-    public function show(TypeRepository $typeRepository): Response
+    public function show(TypeRepository $typeRepository, UserRepository $userRepository): Response
     {
+        $user = $userRepository->findOneByName('Alex Simion');
+
         return $this->render('type/index.html.twig', [
-            'types' => $typeRepository->findAll(),
+            'types' => $typeRepository->findAllByUserId($user),
         ]);
     }
     #[Route('/types/new',name:'types_new', methods: ['GET'])]
@@ -36,13 +39,16 @@ class TypeController extends AbstractController
     }
 
     #[Route('/types',name:'types_create', methods: ['POST'])]
-    public function create(Request $request, TypeRepository $typeRepository): Response
+    public function create(Request $request, TypeRepository $typeRepository, UserRepository $userRepository): Response
     {
         $type = new Type();
         $form = $this->createForm(TypeType::class, $type, [
             'action' => $this->generateUrl('types_create'),
             'method' => 'POST'
         ]);
+
+        $user = $userRepository->findOneByName('Alex Simion');
+        $type->setUser($user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

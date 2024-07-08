@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Type;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,6 +35,16 @@ class TypeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function findAllByUserId(User $user): array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     public function deleteOneById(int $id): void

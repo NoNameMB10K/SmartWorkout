@@ -30,6 +30,10 @@ class Type
     #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'type')]
     private Collection $exercises;
 
+    #[ORM\ManyToOne(inversedBy: 'types')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
@@ -109,6 +113,18 @@ class Type
                 $exercise->setType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
