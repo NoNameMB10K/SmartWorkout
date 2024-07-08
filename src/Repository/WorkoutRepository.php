@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Type;
 use App\Entity\User;
 use App\Entity\Workout;
+use App\Repository\Typee as TypeeAlias;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,6 +36,16 @@ class WorkoutRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('w')
             ->andWhere('w.user = :user')
             ->setParameter('user', $suer)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findAllByType(Type $type): array
+    {
+        return $this->createQueryBuilder('w')
+            ->andWhere('w.type = :type')
+            ->setParameter('type', $type)
             ->getQuery()
             ->getResult()
             ;

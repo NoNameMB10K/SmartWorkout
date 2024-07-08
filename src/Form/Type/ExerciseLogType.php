@@ -42,7 +42,7 @@ class ExerciseLogType extends AbstractType
                 'placeholder' => 'Select a exercise',
                 'required' => true,
             ])
-            ->add('AddExercise', SubmitType::class)
+            ->add('Save', SubmitType::class)
         ;
     }
 

@@ -20,7 +20,7 @@ final class Version20240708173153 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE exercise_log ADD weight INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE exercise_log ADD weight INT DEFAULT 0');
         $this->addSql('ALTER TABLE user CHANGE is_trainer is_trainer TINYINT(1) NOT NULL');
     }
 

@@ -25,8 +25,8 @@ class WorkoutType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => [
-                    'pattern' => '^[a-zA-Z]+$',
-                    'message' => 'Name can contain only letters',
+                    'pattern' => '^[a-zA-Z ]+$',
+                    'placeholder' => 'Can contain only letters or space',
                 ]])
             ->add('date', DateTimeType::class)
             ->add('type', EntityType::class, [

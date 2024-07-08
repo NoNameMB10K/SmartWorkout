@@ -1,97 +1,26 @@
-{#/exercise_log/showWorkout.html.twig#}
+{# /exercise_log/showWorkout.html.twig #}
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Exercises{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .container {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .card {
-            background-color: #333333;
-            color: #ffffff;
-            border: 1px solid #444444;
-            border-radius: 8px;
-            width: calc(33.33% - 20px);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .card-header {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            border-bottom: 1px solid #444444;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            padding: 10px 15px;
-            text-align: center;
-        }
-        .card-body {
-            padding: 15px;
-            text-align: center;
-        }
-        .card-footer {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            border-top: 1px solid #444444;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            padding: 10px 15px;
-            text-align: center;
-        }
-        .video-preview {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-    </style>
-{% endblock %}
+{% block title %}Workout-Exercises{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Workout</h1>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>User ID</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{ workout.name }}</td>
-                <td>{{ workout.date|date('Y-m-d H:i:s') }}</td>
-                <td>{{ workout.user.id }}</td>
-                <td>{{ workout.type is not null ? workout.type.name : 'N/A' }}</td>
-            </tr>
-            </tbody>
-        </table>
+        <h1 style="text-align: center;">Workout: {{ workout.name }}</h1>
+        <h2 style="text-align: center;">Date: {{ workout.date|date('Y-m-d H:i:s') }}</h2>
+        <p style="text-align: center;">Contains the following exercises:</p>
 
-        <h1 class="mt-5 mb-4">Exercises</h1>
         <div class="card-container">
-            {% for exercise in exercises %}
-                <div class="card">
-                    <div class="card-header">
-                        <h3>{{ exercise.data.name }}</h3>
-                    </div>
+            {% for exerciseLog in exercisesLogs %}
+                <div class="card horizontal-card">
                     <div class="card-body">
-                        <iframe class="video-preview" src="https://www.youtube.com/embed/{{ exercise.data.linkToVideo }}" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="card-footer">
-                        <p>Type: {{ exercise.data.type is not null ? exercise.data.type.name : 'N/A' }}</p>
-                        <form action="{{ path('deleteExerciseWorkout_exerciseLog', { 'exerciseLogId': exercise.exerciseLogId }) }}" method="post" style="display:inline;">
+                        <div class="exercise-info">
+                            <span class="exercise-box">{{ exerciseLog.exercise.name }}</span>
+                            <span class="exercise-box">Nr. Reps: {{ exerciseLog.nrReps }}</span>
+                            <span class="exercise-box">Weight: {{ exerciseLog.weight }} kg</span>
+                            <span class="exercise-box">Volume: {{ exerciseLog.weight * exerciseLog.nrReps }}</span>
+                        </div>
+                        <form action="{{ path('deleteExerciseWorkout_exerciseLog', { 'exerciseLogId': exerciseLog.id }) }}" method="post" class="delete-form">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -99,7 +28,8 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
-    <a href="{{  path('newExerciseWorkout_exerciseLog', { 'workoutId': workoutId }) }}">Add New Exercise</a>
+        <div style="text-align: center;">
+            <a href="{{ path('newExerciseWorkout_exerciseLog', { 'workoutId': workoutId }) }}" class="btn btn-primary mt-4">Add New Exercise</a>
+        </div>
+        </div>
 {% endblock %}
-

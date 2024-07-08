@@ -2,83 +2,45 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Exercises{% endblock %}
+{% block title %}Workout-Exercises{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .container {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .card {
-            background-color: #333333;
-            color: #ffffff;
+        input[type=text], input[type=url], select {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
             border: 1px solid #444444;
-            border-radius: 8px;
-            width: calc(33.33% - 20px);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .card-header {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            border-bottom: 1px solid #444444;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            padding: 10px 15px;
-            text-align: center;
-        }
-        .card-body {
-            padding: 15px;
-            text-align: center;
-        }
-        .card-footer {
-            background-color: #1e1e1e;
-            color: #ffffff;
-            border-top: 1px solid #444444;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            padding: 10px 15px;
-            text-align: center;
-        }
-        .video-preview {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 8px;
+            width: 100%;
         }
     </style>
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Workout</h1>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>User ID</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{ workout.name }}</td>
-                <td>{{ workout.date|date('Y-m-d H:i:s') }}</td>
-                <td>{{ workout.user.id }}</td>
-                <td>{{ workout.type is not null ? workout.type.name : 'N/A' }}</td>
-            </tr>
-            </tbody>
-        </table>
-        {{ form(formExerciseLog) }}
+        <h1 style="text-align: center;">Workout: {{ workout.name }}</h1>
+        <h2 style="text-align: center;">Date: {{ workout.date|date('Y-m-d H:i:s') }}</h2>
+        <p style="text-align: center;">Contains the following exercises:</p>
+        <div class="card">
+            {{ form_start(formExerciseLog) }}
+            <div class="form-group" style="width: 100%; text-align: center;">
+                {{ form_row(formExerciseLog.nrReps, {'attr': {'style': 'width: 50%; margin: 0 auto;'}}) }}
+            </div>
+            <div class="form-group" style="width: 100%; text-align: center;">
+                {{ form_row(formExerciseLog.weight, {'attr': {'style': 'width: 50%; margin: 0 auto;'}}) }}
+            </div>
+            <div class="form-group" style="width: 100%; text-align: center;">
+                {{ form_row(formExerciseLog.duration, {'attr': {'style': 'width: 50%; margin: 0 auto;'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(formExerciseLog.exercise) }}
+            </div>
+            {{ form_widget(formExerciseLog.Save, {'attr': {'class': 'btn btn-primary', 'style': 'width: 8%;'}}) }}
+            {{ form_end(formExerciseLog) }}
+        </div>
     </div>
 {% endblock %}
+
 

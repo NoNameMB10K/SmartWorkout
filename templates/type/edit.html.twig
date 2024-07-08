@@ -1,2 +1,43 @@
-{{ form(editForm) }}
-{{ form(deleteFrom) }}
+{# templates/type/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Type{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        input[type=text], input[type=url], select {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            padding: 8px;
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <h1>Edit Exercise</h1>
+            {{ form_start(editForm) }}
+            <div class="form-group">
+                {{ form_row(editForm.name) }}
+            </div>
+            {{ form_widget(editForm.save, {'attr': {'class': 'btn btn-primary', 'style': 'width: 8%;'}}) }}
+            {{ form_end(editForm) }}
+
+            <br>
+
+            {% if deletable %}
+                {{ form_start(deleteFrom) }}
+                {{ form_widget(deleteFrom.delete, {'attr': {'class': 'btn btn-danger', 'style': 'width: 8%;'}}) }}
+                {{ form_end(deleteFrom) }}
+            {% else %}
+                <p>Type is used in some exercises and can't be deleted now.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

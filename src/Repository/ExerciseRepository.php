@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Exercise;
+use App\Entity\Type;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -57,6 +58,20 @@ class ExerciseRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    public function typeIsUsed(Type $type): bool
+    {
+        $ans = $this->createQueryBuilder('u')
+            ->where('u.type = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult()
+        ;
+        if(!empty($ans))
+            return false;
+        else
+            return true;
     }
 
 

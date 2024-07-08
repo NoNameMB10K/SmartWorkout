@@ -22,23 +22,25 @@ class ExerciseLogController extends AbstractController
         $currentWorkout = $workoutRepository->findOneById($workoutId);
         $exerciseLogs =  $exerciseLogRepository->findByWorkoutId($workoutId);
 
-        $exercises = array();
-        foreach ($exerciseLogs as $exerciseLog) {
+//        dd($exerciseLogs);
 
-            $exercise = new Exercise();
-            $exercise->setName($exerciseLog->getExercise()->getName());
-            $exercise->setId($exerciseLog->getExercise()->getId());
-            $exercise->setLinkToVideo($exerciseLog->getExercise()->getLinkToVideo());
-            $exercise->setType($exerciseLog->getExercise()->getType());
-
-            $element = array('exerciseLogId' => $exerciseLog->getId(), 'data' => $exercise);
-            $exercises[] = $element;
-        }
+//        $exercises = array();
+//        foreach ($exerciseLogs as $exerciseLog) {
+//
+//            $exercise = new Exercise();
+//            $exercise->setName($exerciseLog->getExercise()->getName());
+//            $exercise->setId($exerciseLog->getExercise()->getId());
+//            $exercise->setLinkToVideo($exerciseLog->getExercise()->getLinkToVideo());
+//            $exercise->setType($exerciseLog->getExercise()->getType());
+//
+//            $element = array('exerciseLogId' => $exerciseLog->getId(), 'data' => $exercise);
+//            $exercises[] = $element;
+//        }
 
 
         return $this->render('exercise_log/showWorkout.html.twig', [
             'workout' => $currentWorkout,
-            'exercises' => $exercises,
+            'exercisesLogs' => $exerciseLogs,
             'workoutId' => $workoutId
         ]);
     }

@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Type;
 use App\Form\Type\DeleteButtonType;
 use App\Form\Type\TypeType;
+use App\Repository\ExerciseRepository;
 use App\Repository\TypeRepository;
 use App\Repository\UserRepository;
+use App\Repository\WorkoutRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +66,7 @@ class TypeController extends AbstractController
     }
 
     #[Route('/type/edit/{id}', name:'type_edit', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function edit(int $id, TypeRepository $typeRepository): Response
+    public function edit(int $id, TypeRepository $typeRepository, ExerciseRepository $exerciseRepository): Response
     {
         $type = $typeRepository->findOneById($id);
         $editForm = $this->createForm(TypeType::class, $type, [
@@ -77,9 +79,12 @@ class TypeController extends AbstractController
             'method' => 'DELETE',
         ]);
 
+        $deletable = $exerciseRepository->typeIsUsed($type);
+
         return $this->render('type/edit.html.twig', [
             'editForm' => $editForm,
             'deleteFrom' => $deleteForm,
+            'deletable' => $deletable
         ]);
     }
 
@@ -106,9 +111,15 @@ class TypeController extends AbstractController
     }
 
     #[Route('/type/delete/{id}', name:'type_delete', requirements: ['id' => '^\d+$'], methods: ['DELETE'])]
-    public function delete(int $id, TypeRepository $typeRepository): Response
+    public function delete(int $id, TypeRepository $typeRepository, WorkoutRepository $workoutRepository): Response
     {
         $type = $typeRepository->findOneById($id);
+        $workouts = $workoutRepository->findAllByType($type);
+        foreach ($workouts as $workout) {
+            $workout->setType(null);
+            $workoutRepository->saveOne($workout);
+        }
+
         $typeRepository->deleteOneById($id);
         return $this->redirectToRoute('types_index');
     }
