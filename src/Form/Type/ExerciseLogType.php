@@ -29,6 +29,11 @@ class ExerciseLogType extends AbstractType
                     'min' => 1,
                 ]
             ])
+            ->add('weight', IntegerType::class, [
+                'attr' => [
+                    'min' => 0,
+                ]
+            ])
             ->add('duration', TimeType::class)
             ->add('exercise', EntityType::class, [
                 'class' => Exercise::class,
