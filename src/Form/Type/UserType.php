@@ -31,13 +31,6 @@ class UserType extends AbstractType
                         'Male' => 1,
                         'Female' => 2,
                     ],])
-            ->add('isTrainer', ChoiceType::class, [
-                'choices' =>
-                    [
-                        'No' => false,
-                        'Yes' => true,
-                    ]
-            ])
             ->add('save', SubmitType::class)
         ;
     }

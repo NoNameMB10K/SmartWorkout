@@ -46,9 +46,6 @@ class User
     #[ORM\OneToMany(targetEntity: Type::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $types;
 
-    #[ORM\Column]
-    private ?bool $isTrainer = null;
-
     public function __construct()
     {
         $this->workouts = new ArrayCollection();
@@ -195,18 +192,6 @@ class User
                 $type->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getIsTrainer(): ?bool
-    {
-        return $this->isTrainer;
-    }
-
-    public function setIsTrainer(bool $isTrainer): static
-    {
-        $this->isTrainer = $isTrainer;
 
         return $this;
     }
