@@ -10,6 +10,7 @@
     {% endblock %}
 </head>
 <body>
+{% block nav %}
 <nav class="navbar">
     <ul class="nav-list">
         <li><a href="{{ path('workouts_index') }}" class="btn-nav">WORKOUTS</a></li>
@@ -17,9 +18,14 @@
         <li><a href="{{ path('types_index') }}" class="btn-nav">TYPES</a></li>
     </ul>
     <div class="login-icon">
-        <a href="#" class="btn-nav">Login</a>
+        {% if userLoggedIn is defined and userLoggedIn %}
+            <a href="{{ path('app_logout') }}" class="btn-nav">Logout</a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="btn-nav">Login</a>
+        {% endif %}
     </div>
 </nav>
+{% endblock %}
 
 {% block body %}
 <div class="container">
