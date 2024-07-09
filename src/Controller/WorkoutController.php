@@ -11,17 +11,19 @@ use App\Repository\UserRepository;
 use App\Repository\WorkoutRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class WorkoutController extends AbstractController
 {
     #[Route('/workouts', name: 'workouts_index', methods: ['GET'])]
-    public function index(WorkoutRepository $workoutRepository, UserRepository $userRepository): Response
+    public function index(WorkoutRepository $workoutRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
 
         return $this->render('workout/index.html.twig', ['workouts' => $workoutRepository->findAllByUserId($user)]);
     }

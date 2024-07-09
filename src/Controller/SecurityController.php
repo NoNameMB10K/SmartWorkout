@@ -15,13 +15,19 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        if ($request->isMethod('POST')) {
+            // Dumping the request details
+            dd($request->request->all());  // This will dump all POST parameters
+            dump($request->getMethod());     // This will dump the HTTP method (POST in this case)
+            dump($request->getClientIp());   // This will dump the client's IP address, useful for logging
+        }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
