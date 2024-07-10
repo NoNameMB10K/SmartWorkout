@@ -13,11 +13,14 @@
 {% block nav %}
 <nav class="navbar">
     <ul class="nav-list">
-        <li><a href="{{ path('workouts_index') }}" class="btn-nav">WORKOUTS</a></li>
-        <li><a href="{{ path('exercises_index') }}" class="btn-nav">EXERCISES</a></li>
-        <li><a href="{{ path('types_index') }}" class="btn-nav">TYPES</a></li>
+        <li><a href="{{ path('app_home') }}" class="btn-nav">Home</a></li>
+        <li><a href="{{ path('workouts_index') }}" class="btn-nav">Workouts</a></li>
+        <li><a href="{{ path('exercises_index') }}" class="btn-nav">Exercises</a></li>
+        <li><a href="{{ path('types_index') }}" class="btn-nav">Types</a></li>
     </ul>
     <div class="login-icon">
+        <a href="{{ path('user_show') }}" class="btn-nav">Account</a>
+
         {% if app.user is not empty %}
             <a href="{{ path('app_logout') }}" class="btn-nav">Logout</a>
         {% else %}
@@ -31,7 +34,7 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            CARD WITH SOME TEXT ABOUT THE SITE
+            SOME TEXT
         </div>
     </div>
 </div>

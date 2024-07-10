@@ -13,8 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class ExerciseType extends AbstractType
 {
@@ -36,10 +34,17 @@ class ExerciseType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'attr' => [
-                    'pattern' => '^[a-zA-Z ]+$',
-                    'placeholder' => 'Can contain only letters or space',
+                    'pattern' => '^[a-zA-Z]+[ ]?[a-zA-Z]*$',
+                    'placeholder' => 'Can contain only letters separated by maximum one space',
                 ]])
-            ->add('linkToVideo', TextType::class, ['required' => false])
+            ->add('linkToVideo', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'minlength' => 11,
+                    'maxlength' => 11,
+                    'placeholder' => '11 characters',
+                ]
+            ])
             ->add('type', EntityType::class, [
                 'class' => Type::class,
                 'choices' => $this->typeRepository->findAllByUserId($user),

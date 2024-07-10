@@ -22,13 +22,6 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ($request->isMethod('POST')) {
-            // Dumping the request details
-            dd($request->request->all());  // This will dump all POST parameters
-            dump($request->getMethod());     // This will dump the HTTP method (POST in this case)
-            dump($request->getClientIp());   // This will dump the client's IP address, useful for logging
-        }
-
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
@@ -57,10 +50,17 @@ class SecurityController extends AbstractController
                 )
             );
 
+            if($form->get('areYouACoach')->getData())
+            {
+                $user->setRoles(['ROLE_COACH']);
+            }
+            else
+            {
+                $user->setRoles(['ROLE_USER']);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_home');
         }

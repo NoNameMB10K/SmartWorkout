@@ -4,59 +4,6 @@
 
 {% block title %}User{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .container {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .card {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-            border: 1px solid #444444;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .card-header {
-            background-color: #333333;
-            color: #ffffff;
-            border-bottom: 1px solid #444444;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            padding: 10px 15px;
-        }
-        .card-body {
-            padding: 15px;
-        }
-        table {
-            width: 100%;
-            background-color: #2c2c2c;
-            color: #e0e0e0;
-            border: none;
-        }
-        th {
-            background-color: #333333;
-            color: #ffffff;
-            border: none;
-        }
-        td {
-            background-color: #2c2c2c;
-            color: #e0e0e0;
-            border: none;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        li {
-            color: #e0e0e0;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     <div class="container">
         <div class="card">
@@ -99,6 +46,8 @@
                     </tbody>
                 </table>
             </div>
+            <a href="{{ path('user_edit') }}" class="btn-nav">Edit</a>
+
         </div>
     </div>
 {% endblock %}
