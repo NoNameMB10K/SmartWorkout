@@ -12,15 +12,18 @@ use App\Repository\WorkoutRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TypeController extends AbstractController
 {
     #[Route('/types', name: 'types_index', methods: ['GET'])]
-    public function show(TypeRepository $typeRepository, UserRepository $userRepository): Response
+    public function show(TypeRepository $typeRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
 
         return $this->render('type/index.html.twig', [
             'types' => $typeRepository->findAllByUserId($user),
@@ -41,7 +44,7 @@ class TypeController extends AbstractController
     }
 
     #[Route('/types',name:'types_create', methods: ['POST'])]
-    public function create(Request $request, TypeRepository $typeRepository, UserRepository $userRepository): Response
+    public function create(Request $request, TypeRepository $typeRepository, UserRepository $userRepository , RequestStack $requestStack): Response
     {
         $type = new Type();
         $form = $this->createForm(TypeType::class, $type, [
@@ -49,7 +52,9 @@ class TypeController extends AbstractController
             'method' => 'POST'
         ]);
 
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
         $type->setUser($user);
 
         $form->handleRequest($request);

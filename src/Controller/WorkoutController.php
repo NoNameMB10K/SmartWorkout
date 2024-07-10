@@ -44,12 +44,14 @@ class WorkoutController extends AbstractController
     }
 
     #[Route('/workouts', name:'create_workout', methods: ['POST'])]
-    public function create(Request $request, WorkoutRepository $workoutRepository, UserRepository $userRepository): Response
+    public function create(Request $request, WorkoutRepository $workoutRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
         $workout = new Workout();
         $form = $this->createForm(WorkoutType::class, $workout);
 
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
         $workout->setUser($user);
 
         $form->handleRequest($request);

@@ -11,15 +11,18 @@ use App\Repository\UserRepository;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class ExerciseController extends AbstractController
 {
     #[Route('/exercises', name:'exercises_index', methods: ['GET'])]
-    public function index(ExerciseRepository $exerciseRepository, UserRepository $userRepository): Response
+    public function index(ExerciseRepository $exerciseRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
 
         return $this->render('exercise/index.html.twig', ['exercises' => $exerciseRepository->findAllByUserId($user)]);
     }
@@ -38,12 +41,14 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercises',name:'exercises_create', methods: ['POST'])]
-    public function create(Request $request, ExerciseRepository $exerciseRepository, UserRepository $userRepository): Response
+    public function create(Request $request, ExerciseRepository $exerciseRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
         $exercise = new Exercise();
         $form = $this->createForm(ExerciseType::class, $exercise);
 
-        $user = $userRepository->findOneByName('Alex Simion');
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
         $exercise->setUser($user);
 
         $form->handleRequest($request);
