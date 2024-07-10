@@ -33,11 +33,7 @@ class WorkoutType extends AbstractType
         $user = $this->userRepository->findOneByMail($mail);
 
         $builder
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'pattern' => '^[a-zA-Z]+[ ]?[a-zA-Z]*$',
-                    'placeholder' => 'Can contain only letters separated by maximum one space',
-                ]])
+            ->add('name', TextType::class)
             ->add('date', DateTimeType::class)
             ->add('type', EntityType::class, [
                 'class' => Type::class,

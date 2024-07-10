@@ -16,11 +16,7 @@ class UserUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'pattern' => '^[a-zA-Z ]+$',
-                    'placeholder' => 'Can contain only letters or space',
-                ]])
+            ->add('name', TextType::class)
             ->add('birthday',BirthdayType::class, array('required' => false) )
             ->add('gender', ChoiceType::class,
                 ['choices' =>

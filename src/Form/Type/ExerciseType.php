@@ -32,19 +32,7 @@ class ExerciseType extends AbstractType
         $user = $this->userRepository->findOneByMail($mail);
 
         $builder
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'pattern' => '^[a-zA-Z]+[ ]?[a-zA-Z]*$',
-                    'placeholder' => 'Can contain only letters separated by maximum one space',
-                ]])
-            ->add('linkToVideo', TextType::class, [
-                'required' => false,
-                'attr' => [
-                    'minlength' => 11,
-                    'maxlength' => 11,
-                    'placeholder' => '11 characters',
-                ]
-            ])
+            ->add('name', TextType::class)
             ->add('type', EntityType::class, [
                 'class' => Type::class,
                 'choices' => $this->typeRepository->findAllByUserId($user),

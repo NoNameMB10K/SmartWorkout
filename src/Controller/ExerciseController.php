@@ -8,6 +8,7 @@ use App\Form\Type\ExerciseType;
 use App\Repository\ExerciseLogRepository;
 use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
+use App\Service\YouTubeService;
 use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ExerciseController extends AbstractController
 {
+
+    private YouTubeService $youTubeService;
+    public function __construct(YouTubeService $youTubeService)
+    {
+        $this->youTubeService = $youTubeService;
+    }
+
     #[Route('/exercises', name:'exercises_index', methods: ['GET'])]
     public function index(ExerciseRepository $exerciseRepository, UserRepository $userRepository, RequestStack $requestStack): Response
     {
@@ -53,6 +61,10 @@ class ExerciseController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $query = '2 min tutorial for '. $exercise->getName();
+            $videoId = $this->youTubeService->searchFirstVideoUrl($query);
+            $exercise->setLinkToVideo($videoId);
+
             $exerciseRepository->saveOne($exercise);
             return $this->redirectToRoute('exercises_index');
         }

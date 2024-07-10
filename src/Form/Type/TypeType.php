@@ -14,11 +14,7 @@ class TypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
-                'attr' => [
-                    'pattern' => '^[a-zA-Z]+[ ]?[a-zA-Z]*$',
-                    'placeholder' => 'Can contain only letters separated by maximum one space',
-                ]])
+            ->add('name', TextType::class)
             ->add('save', SubmitType::class)
         ;
     }
