@@ -5,7 +5,7 @@
     <title>{% block title %}BASE{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="icon" href="{{ asset('images/favicon.png') }}">
+        <link rel="icon" href="{{ asset('images/mascot.png') }}">
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
@@ -30,13 +30,25 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            SOME TEXT
+    <div class="container">
+        <h1 class="text-center">SmartWorkout</h1>
+        <div class="card">
+            <div class="text-center mb-4">
+                <img src="{{ asset('images/mascot.png') }}" alt="Mascot Image" class="img-fluid" style="max-width: 35%;">
+            </div>
+            <div class="card-body">
+                <h1 class="card-title">Features</h1>
+                <br>
+                <ul>
+                    <li>Track your gym progress effortlessly</li>
+                    <li>Define custom exercises and categorize them into types such as muscle groups or exercise genres like weightlifting, calisthenics, cardio, etc.</li>
+                    <li>Create custom workouts and add your exercises to them</li>
+                    <li>Easily keep track of the number of reps and weights lifted</li>
+                    <li>View workout statistics to monitor and track your progress over time</li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}

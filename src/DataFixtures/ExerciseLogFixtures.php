@@ -25,46 +25,57 @@ class ExerciseLogFixtures extends Fixture implements DependentFixtureInterface
         $exerciseLog12 = new ExerciseLog();
 
         $exerciseLog1->setWorkout($this->getReference("workout1"));
-        $exerciseLog1->setExercise($this->getReference("exercise2"));
+        $exerciseLog1->setExercise($this->getReference("exercise1"));
         $exerciseLog1->setNrReps(10);
+        $exerciseLog1->setWeight(60);
         $exerciseLog2->setWorkout($this->getReference("workout1"));
-        $exerciseLog2->setExercise($this->getReference("exercise2"));
+        $exerciseLog2->setExercise($this->getReference("exercise1"));
         $exerciseLog2->setNrReps(10);
+        $exerciseLog2->setWeight(60);
         $exerciseLog3->setWorkout($this->getReference("workout1"));
-        $exerciseLog3->setExercise($this->getReference("exercise2"));
+        $exerciseLog3->setExercise($this->getReference("exercise1"));
         $exerciseLog3->setNrReps(10);
+        $exerciseLog3->setWeight(60);
+
+        $exerciseLog4->setWorkout($this->getReference("workout1"));
+        $exerciseLog4->setExercise($this->getReference("exercise2"));
+        $exerciseLog4->setNrReps(8);
+        $exerciseLog4->setWeight(15);
+        $exerciseLog5->setWorkout($this->getReference("workout1"));
+        $exerciseLog5->setExercise($this->getReference("exercise2"));
+        $exerciseLog5->setNrReps(8);
+        $exerciseLog5->setWeight(15);
+        $exerciseLog6->setWorkout($this->getReference("workout1"));
+        $exerciseLog6->setExercise($this->getReference("exercise2"));
+        $exerciseLog6->setNrReps(8);
+        $exerciseLog6->setWeight(15);
+
+        $exerciseLog7->setWorkout($this->getReference("workout1"));
+        $exerciseLog7->setExercise($this->getReference("exercise3"));
+        $exerciseLog7->setNrReps(8);
+        $exerciseLog7->setWeight(18);
+        $exerciseLog8->setWorkout($this->getReference("workout1"));
+        $exerciseLog8->setExercise($this->getReference("exercise3"));
+        $exerciseLog8->setNrReps(8);
+        $exerciseLog8->setWeight(18);
+        $exerciseLog9->setWorkout($this->getReference("workout1"));
+        $exerciseLog9->setExercise($this->getReference("exercise3"));
+        $exerciseLog9->setNrReps(8);
+        $exerciseLog9->setWeight(18);
 
 
-        $exerciseLog4->setWorkout($this->getReference("workout4"));
-        $exerciseLog4->setExercise($this->getReference("exercise1"));
-        $exerciseLog4->setNrReps(10);
-        $exerciseLog5->setWorkout($this->getReference("workout4"));
-        $exerciseLog5->setExercise($this->getReference("exercise1"));
-        $exerciseLog5->setNrReps(10);
-        $exerciseLog6->setWorkout($this->getReference("workout4"));
-        $exerciseLog6->setExercise($this->getReference("exercise1"));
-        $exerciseLog6->setNrReps(10);
-
-
-        $exerciseLog7->setWorkout($this->getReference("workout2"));
-        $exerciseLog7->setExercise($this->getReference("exercise9"));
-        $exerciseLog7->setNrReps(10);
-        $exerciseLog8->setWorkout($this->getReference("workout2"));
-        $exerciseLog8->setExercise($this->getReference("exercise9"));
-        $exerciseLog8->setNrReps(10);
-        $exerciseLog9->setWorkout($this->getReference("workout2"));
-        $exerciseLog9->setExercise($this->getReference("exercise9"));
-        $exerciseLog9->setNrReps(10);
-
-        $exerciseLog10->setWorkout($this->getReference("workout2"));
-        $exerciseLog10->setExercise($this->getReference("exercise7"));
+        $exerciseLog10->setWorkout($this->getReference("workout1"));
+        $exerciseLog10->setExercise($this->getReference("exercise4"));
         $exerciseLog10->setNrReps(10);
-        $exerciseLog11->setWorkout($this->getReference("workout2"));
-        $exerciseLog11->setExercise($this->getReference("exercise7"));
+        $exerciseLog10->setWeight(72);
+        $exerciseLog11->setWorkout($this->getReference("workout1"));
+        $exerciseLog11->setExercise($this->getReference("exercise4"));
         $exerciseLog11->setNrReps(10);
-        $exerciseLog12->setWorkout($this->getReference("workout2"));
-        $exerciseLog12->setExercise($this->getReference("exercise7"));
+        $exerciseLog11->setWeight(72);
+        $exerciseLog12->setWorkout($this->getReference("workout1"));
+        $exerciseLog12->setExercise($this->getReference("exercise4"));
         $exerciseLog12->setNrReps(10);
+        $exerciseLog12->setWeight(72);
 
         $manager->persist($exerciseLog1);
         $manager->persist($exerciseLog2);

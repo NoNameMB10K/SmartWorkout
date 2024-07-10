@@ -22,6 +22,14 @@ class ExerciseLogController extends AbstractController
         $currentWorkout = $workoutRepository->findOneById($workoutId);
         $exerciseLogs =  $exerciseLogRepository->findByWorkoutId($workoutId);
 
+        usort($exerciseLogs, function($a, $b) {
+            $exerciseNameA = $a->getExercise()->getName();
+            $exerciseNameB = $b->getExercise()->getName();
+            return strcmp($exerciseNameA, $exerciseNameB);
+        });//asta ar trebui in query la order by
+
+        //dd($exerciseLogs);
+
 //        dd($exerciseLogs);
 
 //        $exercises = array();
