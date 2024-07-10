@@ -59,6 +59,7 @@ class TypeController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $type->setName(ucwords($type->getName()));
             $typeRepository->saveOne($type);
             return $this->redirectToRoute('types_index');
         }
@@ -104,6 +105,7 @@ class TypeController extends AbstractController
 
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $type->setName(ucwords($type->getName()));
             $typeRepository->saveOne($type);
             return $this->redirectToRoute('types_index');
         }

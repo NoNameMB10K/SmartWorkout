@@ -56,6 +56,7 @@ class WorkoutController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $workout->setName(ucwords($workout->getName()));
             $workoutRepository->saveOne($workout);
             return $this->redirectToRoute('workouts_index');
         }
@@ -107,6 +108,7 @@ class WorkoutController extends AbstractController
 
         $workoutForm->handleRequest($request);
         if ($workoutForm->isSubmitted() && $workoutForm->isValid()) {
+            $workout->setName(ucwords($workout->getName()));
             $workoutRepository->saveOne($workout);
             return $this->redirectToRoute('workouts_index');
         }

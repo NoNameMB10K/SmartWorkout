@@ -40,7 +40,7 @@ class WorkoutType extends AbstractType
                 'choices' => $this->typeRepository->findAllByUserId($user),
                 'choice_label' => 'name', // Property of Type entity to display in dropdown
                 'placeholder' => 'Select a type',
-                'required' => true,
+                'required' => false,
             ])
             ->add('save', SubmitType::class)
         ;

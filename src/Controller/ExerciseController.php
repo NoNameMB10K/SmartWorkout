@@ -64,6 +64,7 @@ class ExerciseController extends AbstractController
             $query = '2 min tutorial for '. $exercise->getName();
             $videoId = $this->youTubeService->searchFirstVideoUrl($query);
             $exercise->setLinkToVideo($videoId);
+            $exercise->setName(ucwords($exercise->getName()));
 
             $exerciseRepository->saveOne($exercise);
             return $this->redirectToRoute('exercises_index');
@@ -119,6 +120,7 @@ class ExerciseController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $exercise->setName(ucwords($exercise->getName()));
             $exerciseRepository->saveOne($exercise);
             return $this->redirectToRoute('exercises_index');
         }
