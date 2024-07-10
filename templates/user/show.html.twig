@@ -8,46 +8,31 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h1 class="mt-3 mb-0">User</h1>
+                <h1 class="mt-3 mb-0">User Profile</h1>
             </div>
             <div class="card-body">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <td>{{ user.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Name</th>
-                        <td>{{ user.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>Password</th>
-                        <td>{{ user.password }}</td>
-                    </tr>
-                    <tr>
-                        <th>Birthday</th>
-                        <td>{{ user.birthday ? user.birthday|date('Y-m-d H:i:s') : 'N/A' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Gender</th>
-                        <td>{{ user.gender is not null ? (user.gender == 1 ? 'Male' : 'Female') : 'N/A' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Workouts</th>
-                        <td>
-                            <ul>
-                                {% for workout in user.workouts %}
-                                    <li>{{ workout.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <a href="{{ path('user_edit') }}" class="btn-nav">Edit</a>
 
+                <div class="card mt-3">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Name: {{ user.name }}</h5>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Birthday: {{ user.birthday ? user.birthday|date('Y-m-d') : 'N/A' }}</h5>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title">Gender: {{ user.gender is not null ? (user.gender == 1 ? 'Male' : 'Female') : 'N/A' }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('user_edit') }}" class="btn btn-secondary">Edit</a>
+                <a href="{{ path('reset_password') }}" class="btn btn-secondary">Reset Password</a>
+            </div>
         </div>
     </div>
 {% endblock %}

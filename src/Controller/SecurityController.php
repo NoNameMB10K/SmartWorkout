@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\RegistrationFormType;
+use App\Form\Type\ResetPasswordType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -67,6 +70,35 @@ class SecurityController extends AbstractController
 
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form,
+        ]);
+    }
+
+    #[Route(path: '/reset_password', name: 'reset_password', methods: ['GET','POST'])]
+    public function reset_password(UserPasswordHasherInterface $userPasswordHasher, Request $request, RequestStack $requestStack, UserRepository $userRepository): Response
+    {
+        $user_new = new User();
+
+        $session = $requestStack->getSession();
+        $mail = $session->get("_security.last_username");
+        $user = $userRepository->findOneByMail($mail);
+
+        $form = $this->createForm(ResetPasswordType::class, $user_new);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user_new->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user_new,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $user->setPassword($user_new->getPassword());
+            $userRepository->saveOne($user);
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('security/resetPassword.html.twig', [
+            'resetForm' => $form,
         ]);
     }
 }

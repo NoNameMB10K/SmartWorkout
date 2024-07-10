@@ -1,4 +1,4 @@
-{#/workout/new.html.twig#}
+{# /workout/new.html.twig #}
 
 {% extends 'base.html.twig' %}
 
@@ -17,6 +17,28 @@
             padding: 8px;
             width: 100%;
         }
+
+        input[type=checkbox] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: #2c2c2c;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            vertical-align: middle;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        input[type=checkbox]:checked {
+            background-color: #b8b8b8; /* Green when checked */
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            color: #e0e0e0;
+        }
     </style>
 {% endblock %}
 
@@ -28,21 +50,42 @@
 
             {{ form_start(registrationForm) }}
             <div class="form-group">
-                {{ form_row(registrationForm.name) }}
-            </div>
-            <div class="form-group">
-                {{ form_row(registrationForm.email) }}
-            </div>
-            <div class="form-group">
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password'
+                {{ form_row(registrationForm.name, {
+                    label: 'Name',
+                    attr: {
+                        style: 'background-color: #2c2c2c; color: #e0e0e0; border: 1px solid #444444; border-radius: 5px; padding: 8px; width: 100%;'
+                    }
                 }) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.areYouACoach) }}
+                {{ form_row(registrationForm.email, {
+                    label: 'Email',
+                    attr: {
+                        style: 'background-color: #2c2c2c; color: #e0e0e0; border: 1px solid #444444; border-radius: 5px; padding: 8px; width: 100%;'
+                    }
+                }) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password',
+                    attr: {
+                        style: 'background-color: #2c2c2c; color: #e0e0e0; border: 1px solid #444444; border-radius: 5px; padding: 8px; width: 100%;'
+                    }
+                }) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(registrationForm.areYouACoach, {
+                    label_attr: {
+                        class: 'checkbox-label'
+                    }
+                }) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(registrationForm.agreeTerms, {
+                    label_attr: {
+                        class: 'checkbox-label'
+                    }
+                }) }}
             </div>
             {{ form_widget(registrationForm.submit, {'attr': {'class': 'btn btn-primary', 'style': 'width: 8%;'}}) }}
             {{ form_end(registrationForm) }}

@@ -19,9 +19,8 @@
         <li><a href="{{ path('types_index') }}" class="btn-nav">Types</a></li>
     </ul>
     <div class="login-icon">
-        <a href="{{ path('user_show') }}" class="btn-nav">Account</a>
-
         {% if app.user is not empty %}
+            <a href="{{ path('user_show') }}" class="btn-nav">Account</a>
             <a href="{{ path('app_logout') }}" class="btn-nav">Logout</a>
         {% else %}
             <a href="{{ path('app_login') }}" class="btn-nav">Login</a>

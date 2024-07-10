@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\Type\DeleteButtonType;
-use App\Form\Type\UserType;
 use App\Form\Type\UserUpdateType;
 use App\Repository\ExerciseLogRepository;
 use App\Repository\ExerciseRepository;
@@ -78,11 +76,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->saveOne($user);
-            return $this->render('finishedActionPrompt.html.twig', [
-                'entity' => 'User',
-                'action' => 'updated',
-                'success' => true,
-            ]);
+            return $this->redirectToRoute('user_show');
         }
 
         return $this->render('finishedActionPrompt.html.twig', [
