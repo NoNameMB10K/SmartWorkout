@@ -1,20 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChartsController!{% endblock %}
+{% block title %}Workout-Chart{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <h1 style="text-align: center;">Workout: {{ workout.name }}</h1>
+        <h2 style="text-align: center;">Date: {{ workout.date|date('Y-m-d H:i:s') }}</h2>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        {% if noData is defined %}
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Not enough data to make chart</p>
+            </div>
+        {% else %}
+            <div style="width: 50%; margin: auto;">
+                <canvas id="myPieChart"></canvas>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Work/SmartWorkout/src/Controller/ChartsController.php</code></li>
-        <li>Your template at <code>C:/Work/SmartWorkout/templates/charts/index.html.twig</code></li>
-    </ul>
-</div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Total Volume: {{ total }} {{ unit }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var data = {
+                labels: [
+                    {% for key, value in data %}
+                    "{{ key }}",
+                    {% endfor %}
+                ],
+                datasets: [{
+                    data: [
+                        {% for key, value in data %}
+                        {{ value }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        // Add more colors as needed
+                    ],
+                }]
+            };
+
+            var ctx = document.getElementById('myPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    // Add other options like title, legend, etc. if needed
+                },
+            });
+        });
+    </script>
 {% endblock %}

@@ -8,13 +8,14 @@ use App\Repository\ExerciseRepository;
 use App\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Positive;
+
 
 class ExerciseLogType extends AbstractType
 {
@@ -44,7 +45,15 @@ class ExerciseLogType extends AbstractType
                     'min' => 0,
                 ]
             ])
-            ->add('duration', TimeType::class)
+            ->add('duration', TimeType::class, [
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'with_seconds' => true,
+                'html5' => true,
+                'attr' => [
+                    'step' => 1,
+                ],
+            ])
             ->add('exercise', EntityType::class, [
                 'class' => Exercise::class,
                 'choices' => $this->exerciseRepository->findAllByUserId($user),

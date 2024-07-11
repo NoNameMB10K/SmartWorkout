@@ -18,7 +18,6 @@ class YouTubeService
         $this->client = new Google_Client();
         $this->client->setDeveloperKey($apiKey);
 
-        // Disable SSL verification for GuzzleHttp Client
         $guzzleClient = new Client(['verify' => false]);
         $this->client->setHttpClient($guzzleClient);
     }
@@ -34,8 +33,6 @@ class YouTubeService
                 'maxResults' => 1,
                 'type' => 'video'
             ]);
-
-
             $videos = $response->getItems();
 
             if (count($videos) > 0) {
@@ -47,19 +44,11 @@ class YouTubeService
             return null;
 
         } catch (Google_Service_Exception $e) {
-            dd($e);
-            // Handle Google service exception
-            // Log or return null
             return null;
-
         } catch (Google_Exception $e) {
-            // Handle Google client exception
-            // Log or return null
             return null;
 
         } catch (GuzzleException $e) {
-            // Handle Guzzle HTTP exception
-            // Log or return null
             return null;
         }
     }

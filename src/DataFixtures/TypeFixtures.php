@@ -21,15 +21,32 @@ class TypeFixtures extends Fixture implements DependentFixtureInterface
         $type2->setUser($this->getReference('user3'));
         $type3->setUser($this->getReference('user3'));
 
+        $type4 = new Type();
+        $type5 = new Type();
+        $type6 = new Type();
+        $type4->setName("Cardio");
+        $type5->setName("Calisthenics");
+        $type6->setName("Stretching");
+        $type4->setUser($this->getReference('user3'));
+        $type5->setUser($this->getReference('user3'));
+        $type6->setUser($this->getReference('user3'));
+
+
         $manager->persist($type1);
         $manager->persist($type2);
         $manager->persist($type3);
+        $manager->persist($type4);
+        $manager->persist($type5);
+        $manager->persist($type6);
 
         $manager->flush();
 
         $this->addReference('type1', $type1);
         $this->addReference('type2', $type2);
         $this->addReference('type3', $type3);
+        $this->addReference('type4', $type4);
+        $this->addReference('type5', $type5);
+        $this->addReference('type6', $type6);
     }
 
     public function getDependencies(): array

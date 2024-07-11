@@ -23,6 +23,10 @@ class ExerciseLogFixtures extends Fixture implements DependentFixtureInterface
         $exerciseLog10 = new ExerciseLog();
         $exerciseLog11 = new ExerciseLog();
         $exerciseLog12 = new ExerciseLog();
+        $exerciseLog13 = new ExerciseLog();
+        $exerciseLog14 = new ExerciseLog();
+        $exerciseLog15 = new ExerciseLog();
+        $exerciseLog16 = new ExerciseLog();
 
         $exerciseLog1->setWorkout($this->getReference("workout1"));
         $exerciseLog1->setExercise($this->getReference("exercise1"));
@@ -77,6 +81,27 @@ class ExerciseLogFixtures extends Fixture implements DependentFixtureInterface
         $exerciseLog12->setNrReps(10);
         $exerciseLog12->setWeight(72);
 
+        $exerciseLog13->setWorkout($this->getReference("workout2"));
+        $exerciseLog13->setExercise($this->getReference("exercise5"));
+        $exerciseLog13->setNrReps(1);
+        $exerciseLog13->setWeight(0);
+        $exerciseLog13->setDuration(new \DateTime('today 01:00:00'));
+        $exerciseLog14->setWorkout($this->getReference("workout2"));
+        $exerciseLog14->setExercise($this->getReference("exercise6"));
+        $exerciseLog14->setNrReps(1);
+        $exerciseLog14->setWeight(0);
+        $exerciseLog14->setDuration(new \DateTime('today 00:5:00'));
+        $exerciseLog15->setWorkout($this->getReference("workout2"));
+        $exerciseLog15->setExercise($this->getReference("exercise7"));
+        $exerciseLog15->setNrReps(1);
+        $exerciseLog15->setWeight(0);
+        $exerciseLog15->setDuration(new \DateTime('today 00:5:00'));
+        $exerciseLog16->setWorkout($this->getReference("workout2"));
+        $exerciseLog16->setExercise($this->getReference("exercise8"));
+        $exerciseLog16->setNrReps(1);
+        $exerciseLog16->setWeight(0);
+        $exerciseLog16->setDuration(new \DateTime('today 00:5:00'));
+
         $manager->persist($exerciseLog1);
         $manager->persist($exerciseLog2);
         $manager->persist($exerciseLog3);
@@ -89,6 +114,10 @@ class ExerciseLogFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($exerciseLog10);
         $manager->persist($exerciseLog11);
         $manager->persist($exerciseLog12);
+        $manager->persist($exerciseLog13);
+        $manager->persist($exerciseLog14);
+        $manager->persist($exerciseLog15);
+        $manager->persist($exerciseLog16);
 
         $manager->flush();
     }

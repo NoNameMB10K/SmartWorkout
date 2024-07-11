@@ -18,6 +18,7 @@
                             </div>
                             <div>
                                 <a href="{{ path('showWorkout_exerciseLog', { 'workoutId': workout.id }) }}" class="btn btn-primary">Show more</a>
+                                <a href="{{ path('app_charts', { 'workoutId': workout.id }) }}" class="btn btn-primary">Chart</a>
                                 <a href="{{ path('edit_workout', { 'id': workout.id }) }}" class="btn btn-secondary">Edit</a>
                             </div>
                         </div>
